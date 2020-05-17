@@ -941,8 +941,8 @@ Display the results in the *doctest-output* buffer, using diff format."
     (let* ((results-buf-name (doctest-results-buffer-name))
            (in-docstring (and check-for-mmm-docstring-overlay
                               (doctest-in-mmm-docstring-overlay)))
-           (temp (doctest-temp-name)) (dir doctest-temp-directory)
-           (input-file (expand-file-name (concat temp ".py") dir))
+           (temp (buffer-name)) (dir doctest-temp-directory)
+           (input-file (expand-file-name temp dir))
            (globs-file (when in-docstring
                          (expand-file-name (concat temp "-globs.py") dir)))
            (cur-buf (current-buffer))
