@@ -347,26 +347,17 @@ that matches `doctest-outdent-re', but does not follow a line matching
 
 (defconst doctest-script
   "\
-from doctest import *
-import sys
-if '%m':
-    import imp
-    try:
-        m = imp.load_source('__imported__', '%m')
-        globs = m.__dict__
-    except Exception, e:
-        print ('doctest-mode encountered an error while importing '
-               'the current buffer:\\n\\n  %s' % e)
-        sys.exit(1)
-else:
-    globs = {}
-doc = open('%t').read()
-if sys.version_info[:2] >= (2,4):
-    test = DocTestParser().get_doctest(doc, globs, '%n', '%f', 0)
-    r = DocTestRunner(optionflags=%l)
-    r.run(test)
-else:
-    Tester(globs=globs).runstring(doc, '%f')"
+import doctest
+import os
+
+script_full_path = '%t'
+script_dirname = os.path.dirname(script_full_path)
+script_filename = os.path.basename(script_full_path)
+
+os.chdir(script_dirname)
+
+doctest.testfile(script_filename, name='%f', optionflags=%l)
+"
   ;; Docstring:
   "Python script used to run doctest.
 The following special sequences are defined:
