@@ -626,7 +626,7 @@ then don't increase the indentation level any."
           (delete-backward-char (skip-chars-forward " \t"))
           (insert-char ?\  new-margin))
         ;; Add the new prompt.
-        (insert-string (if new-indent "... " ">>> "))
+        (insert (if new-indent "... " ">>> "))
         ;; Add the new indentation
         (if new-indent (insert-char ?\  new-indent))
         (setq indent-end (point))))
@@ -844,7 +844,7 @@ Otherwise, delete the preceeding character.
     ;; Change prompt to PS1, when appropriate.
     (when (and (= new-indent 0) (not (looking-at doctest-outdent-re)))
       (delete-backward-char 4)
-      (insert-string ">>> ")))
+      (insert ">>> ")))
        ;; Non-indented source line: remove prompt.
        (t
     (goto-char indent-end)
@@ -968,7 +968,7 @@ Display the results in the *doctest-output* buffer, using diff format."
         (let ((lineno (doctest-line-number)))
           (set-buffer in-buf)
           ;; Add blank lines, to keep line numbers the same:
-          (dotimes (n (- lineno 1)) (insert-string "\n"))
+          (dotimes (n (- lineno 1)) (insert "\n"))
           ;; Add the selected region
           (insert-buffer-substring cur-buf start end)
           ;; Write it to a file
@@ -1021,7 +1021,7 @@ Display the results in the *doctest-output* buffer, using diff format."
                    ;; window to scroll as new output is generated.
                    (save-current-buffer
                      (set-buffer doctest-results-buffer)
-                     (insert-string "\n")
+                     (insert "\n")
                      (set-window-point w (point)))))
 
                ;; Let the user know the process is running.
@@ -1373,7 +1373,7 @@ replacement."
                        (setq end (match-beginning 0)))
                       (t
                        (goto-char (point-max))
-                       (insert-string "\n")
+                       (insert "\n")
                        (setq end (point-max))))
                 (when (and doctest-expected
                            (not (equal (buffer-substring start end)
@@ -1404,11 +1404,11 @@ replacement."
                 (delete-region (point-min) (point-max))
                 ;; Write a confirmation message
                 (if (equal doctest-expected "")
-                    (insert-string "Replace nothing\n")
-                  (insert-string (concat "Replace:\n" doctest-expected)))
+                    (insert "Replace nothing\n")
+                  (insert (concat "Replace:\n" doctest-expected)))
                 (if (equal doctest-got "")
-                    (insert-string "With nothing\n")
-                  (insert-string (concat "With:\n" doctest-got)))
+                    (insert "With nothing\n")
+                  (insert (concat "With:\n" doctest-got)))
                 (let ((confirm-window (display-buffer confirm-buffer)))
                   ;; Shrink the confirm window.
                   (shrink-window-if-larger-than-buffer confirm-window)
