@@ -1148,7 +1148,7 @@ correspond to a failed example."
       (set-buffer doctest-results-buffer)
       (goto-char (point-max))
       (while (re-search-backward (doctest-results-loc-re) nil t)
-        (let ((lineno (string-to-int (match-string 1))))
+        (let ((lineno (string-to-number (match-string 1))))
           (when (equal doctest-results-py-version 'py21)
             (setq lineno (+ lineno 1)))
           (while (and markers (< lineno (cdar markers)))
@@ -1214,7 +1214,7 @@ example's failure description in *doctest-output*."
           (let ((old-selected-failure doctest-selected-failure))
             (beginning-of-line)
             ;; Extract the line number for the doctest file.
-            (let ((orig-lineno (string-to-int (match-string 1))))
+            (let ((orig-lineno (string-to-number (match-string 1))))
               (when (equal doctest-results-py-version 'py21)
                 (setq orig-lineno (+ orig-lineno 1)))
               (dolist (marker-info example-markers)
